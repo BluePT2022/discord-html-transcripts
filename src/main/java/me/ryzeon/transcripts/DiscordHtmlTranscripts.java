@@ -2,6 +2,8 @@ package me.ryzeon.transcripts;
 
 import lombok.var;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.utils.FileUpload;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,7 +42,9 @@ public class DiscordHtmlTranscripts {
     }
 
     public void createTranscript(TextChannel channel, String fileName) throws IOException {
-        channel.sendFile(generateFromMessages(channel.getIterableHistory().stream().collect(Collectors.toList())), fileName != null ? fileName : "transcript.html").queue();
+        InputStream file = generateFromMessages(channel.getIterableHistory().stream().collect(Collectors.toList()));
+        FileUpload upload = FileUpload.fromData(file, "transcript.html");
+        channel.sendFiles(upload).queue();
     }
 
     public InputStream generateFromMessages(Collection<Message> messages) throws IOException {
@@ -48,7 +52,7 @@ public class DiscordHtmlTranscripts {
         if (messages.isEmpty()) {
             throw new IllegalArgumentException("No messages to generate a transcript from");
         }
-        TextChannel channel = messages.iterator().next().getTextChannel();
+        TextChannel channel = messages.iterator().next().getChannel().asTextChannel();
         Document document = Jsoup.parse(htmlTemplate, "UTF-8");
         document.outputSettings().indentAmount(0).prettyPrint(true);
         document.getElementsByClass("preamble__guild-icon")
@@ -83,23 +87,15 @@ public class DiscordHtmlTranscripts {
                 var color = Formatter.toHex(Objects.requireNonNull(member.getColor()));
 
                 //        System.out.println("REFERENCE MSG " + referenceMessage.getContentDisplay());
-                reference.html("<img class=\"chatlog__reference-avatar\" src=\""
-                        + author.getAvatarUrl() + "\" alt=\"Avatar\" loading=\"lazy\">" +
-                        "<span class=\"chatlog__reference-name\" title=\"" + author.getName()
-                        + "\" style=\"color: " + color + "\">" + author.getName() + "\"</span>" +
-                        "<div class=\"chatlog__reference-content\">" +
-                        " <span class=\"chatlog__reference-link\" onclick=\"scrollToMessage(event, '"
-                        + referenceMessage.getId() + "')\">" +
-                        "<em>" +
-                        referenceMessage.getContentDisplay() != null
-                        ? referenceMessage.getContentDisplay().length() > 42
-                        ? referenceMessage.getContentDisplay().substring(0, 42)
-                        + "..."
-                        : referenceMessage.getContentDisplay()
-                        : "Click to see attachment" +
-                        "</em>" +
-                        "</span>" +
-                        "</div>");
+                author.getAvatarUrl();
+                author.getName();
+                author.getName();
+                referenceMessage.getId();
+                referenceMessage.getContentDisplay();
+                reference.html(referenceMessage.getContentDisplay().length() > 42
+                ? referenceMessage.getContentDisplay().substring(0, 42)
+                + "..."
+                : referenceMessage.getContentDisplay());
 
                 messageGroup.appendChild(referenceSymbol);
                 messageGroup.appendChild(reference);
@@ -161,13 +157,6 @@ public class DiscordHtmlTranscripts {
 
                 Element messageContentContentMarkdownSpan = document.createElement("span");
                 messageContentContentMarkdownSpan.addClass("preserve-whitespace");
-//                System.out.println(message.getContentDisplay());
-//                System.out.println(message.getContentDisplay().length());
-//                System.out.println(message.getContentStripped());
-//                System.out.println(message.getContentRaw());
-//                System.out.println(message.getContentDisplay().contains("\n"));
-//                System.out.println(message.getContentDisplay().contains("\r"));
-//                System.out.println(message.getContentDisplay().contains("\r\n"));
                 messageContentContentMarkdownSpan
                         .html(Formatter.format(message.getContentDisplay()));
 
@@ -176,7 +165,6 @@ public class DiscordHtmlTranscripts {
                 messageContent.appendChild(messageContentContent);
             }
 
-            // messsage attachments
             if (!message.getAttachments().isEmpty()) {
                 for (Message.Attachment attach : message.getAttachments()) {
                     Element attachmentsDiv = document.createElement("div");
