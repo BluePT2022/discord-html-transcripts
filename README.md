@@ -1,7 +1,7 @@
 This fork has created to solve compatibility issues with JDA 5
 
 # Discord (JDA) HTML Transcripts
-[![](https://jitpack.io/v/Ryzeon/discord-html-transcripts.svg)](https://jitpack.io/#Ryzeon/discord-html-transcripts)
+[![](https://jitpack.io/v/BluePT2022/discord-html-transcripts.svg)](https://jitpack.io/#BluePT2022/discord-html-transcripts)
 
 Discord HTML Transcripts is a node.js module (recode on JDA) to generate nice looking HTML transcripts. Processes discord markdown like **bold**, *italics*, ~~strikethroughs~~, and more. Nicely formats attachments and embeds. Built in XSS protection, preventing users from inserting html tags. 
 
@@ -13,16 +13,16 @@ HTML Template stolen from [DiscordChatExporter](https://github.com/Tyrrrz/Discor
 
 ```xml
 <repositories>
-    <repository>
-	<id>jitpack.io</id>
-	<url>https://jitpack.io</url>
-    </repository>
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
 </repositories>
 ```
 
 ```xml
 <dependency>
-    <groupId>com.github.Ryzeon</groupId>
+    <groupId>com.github.BluePT2022</groupId>
     <artifactId>discord-html-transcripts</artifactId>
     <version>Tag</version>
 </dependency>
