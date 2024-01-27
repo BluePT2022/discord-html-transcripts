@@ -1,3 +1,5 @@
+This fork has created to solve compatibility issues with JDA 5
+
 # Discord (JDA) HTML Transcripts
 [![Discord](https://img.shields.io/discord/555474311637499955?label=discord)](https://discord.gg/rf5qN7C)
 [![](https://jitpack.io/v/Ryzeon/discord-html-transcripts.svg)](https://jitpack.io/#Ryzeon/discord-html-transcripts)
