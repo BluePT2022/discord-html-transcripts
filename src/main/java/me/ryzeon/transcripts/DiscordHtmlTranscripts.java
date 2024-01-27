@@ -8,13 +8,16 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.awt.*;
-import java.io.*;
-import java.net.URL;;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
+
+;
 
 /**
  * Created by Ryzeon
@@ -43,7 +46,7 @@ public class DiscordHtmlTranscripts {
 
     public void createTranscript(TextChannel channel, String fileName) throws IOException {
         InputStream file = generateFromMessages(channel.getIterableHistory().stream().collect(Collectors.toList()));
-        FileUpload upload = FileUpload.fromData(file, "transcript.html");
+        FileUpload upload = FileUpload.fromData(file, (fileName != null) ? fileName : "transcript.html");
         channel.sendFiles(upload).queue();
     }
 
@@ -122,7 +125,7 @@ public class DiscordHtmlTranscripts {
             Element authorName = document.createElement("span");
             authorName.addClass("chatlog__author-name");
             // authorName.attr("title", author.getName()); // author.name
-            authorName.attr("title", author.getAsTag());
+            authorName.attr("title", author.getName());
             authorName.text(author.getName());
             authorName.attr("data-user-id", author.getId());
             content.appendChild(authorName);
@@ -148,7 +151,7 @@ public class DiscordHtmlTranscripts {
             messageContent.attr("title", "Message sent: "
                     + message.getTimeCreated().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 
-            if (message.getContentDisplay().length() > 0) {
+            if (!message.getContentDisplay().isEmpty()) {
                 Element messageContentContent = document.createElement("div");
                 messageContentContent.addClass("chatlog__content");
 
