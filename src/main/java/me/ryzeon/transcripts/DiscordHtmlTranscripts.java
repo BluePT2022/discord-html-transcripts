@@ -1,5 +1,6 @@
 package me.ryzeon.transcripts;
 
+import lombok.Getter;
 import lombok.var;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -17,8 +18,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-;
-
 /**
  * Created by Ryzeon
  * Project: discord-html-transcripts
@@ -34,11 +33,8 @@ public class DiscordHtmlTranscripts {
             audioFormats = Arrays.asList("mp3", "wav", "ogg", "flac");
 
 
+    @Getter
     private static final DiscordHtmlTranscripts instance = new DiscordHtmlTranscripts();
-
-    public static DiscordHtmlTranscripts getInstance() {
-        return instance;
-    }
 
     public void createTranscript(TextChannel channel) throws IOException {
         createTranscript(channel, null);
