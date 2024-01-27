@@ -9,11 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
+import java.io.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -466,11 +462,30 @@ public class DiscordHtmlTranscripts {
         return new ByteArrayInputStream(document.outerHtml().getBytes());
     }
 
-    private File findFile(String fileName) {
-        URL url = getClass().getClassLoader().getResource(fileName);
-        if (url == null) {
-            throw new IllegalArgumentException("file is not found: " + fileName);
+    private static File findFile(String fileName) {
+        InputStream inputStream = DiscordHtmlTranscripts.class.getClassLoader().getResourceAsStream(fileName);
+        if (inputStream == null) {
+            throw new IllegalArgumentException("File not found: " + fileName);
         }
-        return new File(url.getFile());
+        try {
+            File tempFile = File.createTempFile(fileName, ".tmp");
+            tempFile.deleteOnExit();
+            try (FileOutputStream out = new FileOutputStream(tempFile)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    out.write(buffer, 0, bytesRead);
+                }
+            }
+            return tempFile;
+        } catch (IOException e) {
+            throw new RuntimeException("Error creating temporary file for: " + fileName, e);
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace(); // Handle exception accordingly
+            }
+        }
     }
 }
