@@ -76,7 +76,6 @@ public class DiscordHtmlTranscripts {
                 User author = referenceMessage.getAuthor();
                 Member member = channel.getGuild().getMember(author);
                 assert member != null;
-                var color = Formatter.toHex(Objects.requireNonNull(member.getColor()));
 
                 author.getAvatarUrl();
                 author.getName();
