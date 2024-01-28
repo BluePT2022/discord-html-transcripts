@@ -18,8 +18,9 @@ import java.util.stream.Collectors;
  * Created by Ryzeon
  * Project: discord-html-transcripts
  * Date: 2/12/21 @ 00:32
- * Twitter: @Ryzeon_ 😎
- * Github: github.ryzeon.me
+ * </BR>
+ * Updated by BluePT_
+ * Date: EU: 27/01/2024 US: 01/27/2024
  */
 public class DiscordHtmlTranscripts {
 
@@ -51,37 +52,32 @@ public class DiscordHtmlTranscripts {
         Document document = Jsoup.parse(htmlTemplate, "UTF-8");
         document.outputSettings().indentAmount(0).prettyPrint(true);
         document.getElementsByClass("preamble__guild-icon")
-                .first().attr("src", channel.getGuild().getIconUrl()); // set guild icon
+                .first().attr("src", channel.getGuild().getIconUrl());
 
-        document.getElementById("transcriptTitle").text(channel.getName()); // set title
-        document.getElementById("guildname").text(channel.getGuild().getName()); // set guild name
-        document.getElementById("ticketname").text(channel.getName()); // set channel name
+        document.getElementById("transcriptTitle").text(channel.getName());
+        document.getElementById("guildname").text(channel.getGuild().getName());
+        document.getElementById("ticketname").text(channel.getName());
 
-        Element chatLog = document.getElementById("chatlog"); // chat log
+        Element chatLog = document.getElementById("chatlog");
         for (Message message : messages.stream()
                 .sorted(Comparator.comparing(ISnowflake::getTimeCreated))
                 .collect(Collectors.toList())) {
-            // create message group
             Element messageGroup = document.createElement("div");
             messageGroup.addClass("chatlog__message-group");
 
-            // message reference
-            if (message.getReferencedMessage() != null) { // preguntar si es eso
-                // message.reference?.messageId
-                // create symbol
+            if (message.getReferencedMessage() != null) {
                 Element referenceSymbol = document.createElement("div");
                 referenceSymbol.addClass("chatlog__reference-symbol");
 
-                // create reference
                 Element reference = document.createElement("div");
                 reference.addClass("chatlog__reference");
 
                 var referenceMessage = message.getReferencedMessage();
                 User author = referenceMessage.getAuthor();
                 Member member = channel.getGuild().getMember(author);
+                assert member != null;
                 var color = Formatter.toHex(Objects.requireNonNull(member.getColor()));
 
-                //        System.out.println("REFERENCE MSG " + referenceMessage.getContentDisplay());
                 author.getAvatarUrl();
                 author.getName();
                 author.getName();

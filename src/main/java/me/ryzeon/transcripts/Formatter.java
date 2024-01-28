@@ -9,8 +9,9 @@ import lombok.experimental.UtilityClass;
  * Created by Ryzeon
  * Project: discord-html-transcripts
  * Date: 2/12/21 @ 00:32
- * Twitter: @Ryzeon_ 😎
- * Github: github.ryzeon.me
+ * </BR>
+ * Updated by BluePT_
+ * Date: EU: 27/01/2024 US: 01/27/2024
  */
 @UtilityClass
 public class Formatter {
