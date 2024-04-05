@@ -1,4 +1,4 @@
-This fork has created to solve compatibility issues with JDA 5
+This fork was created to solve compatibility issues with JDA 5
 </br> Since Version 3 there are two main classes:
 ### For the original code (by ryzeon, updated for JDA 5) use: me.ryzeon.transcripts.DiscordHtmlTranscripts
 ### For the new code use: me.bluept.transcripts.DiscordTranscripts
