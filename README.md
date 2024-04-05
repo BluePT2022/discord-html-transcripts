@@ -2,6 +2,9 @@ This fork was created to solve compatibility issues with JDA 5
 </br> Since Version 3 there are two main classes:
 ### For the original code (by ryzeon, updated for JDA 5) use: me.ryzeon.transcripts.DiscordHtmlTranscripts
 ### For the new code use: me.bluept.transcripts.DiscordTranscripts
+>[!NOTE]
+>The only differences between the two codes is that in me.ryzeon the code stays the same, the only thing that changes is the imports so that it can be used with JDA 5. <br>
+>On me.bluept the code is mostly the same but with a lot of refactoring to make it easier to read and maintain it.
 
 # Discord (JDA) HTML Transcripts
 [![](https://jitpack.io/v/BluePT2022/discord-html-transcripts.svg)](https://jitpack.io/#BluePT2022/discord-html-transcripts)
